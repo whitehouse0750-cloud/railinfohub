@@ -3,65 +3,619 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>RailInfoHub - Live Train Status</title>
+
 <style>
-body{font-family:Arial;margin:0;background:#f4f7fb;text-align:center}
-header{background:#0b3d91;color:white;padding:20px}
-main{max-width:500px;margin:30px auto;padding:20px}
-input,button{padding:14px;margin:5px;border-radius:8px;border:1px solid #ddd}
-button{background:#ff7a00;color:white;border:0;font-weight:bold}
-#result{margin-top:20px;background:white;padding:20px;border-radius:12px}
+*{
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  margin:0;
+  background:#f4f7fb;
+  color:#222;
+}
+
+header{
+  background:#0b3d91;
+  color:white;
+  padding:22px 15px;
+  text-align:center;
+}
+
+header h1{
+  margin:0 0 7px;
+  font-size:28px;
+}
+
+header p{
+  margin:0;
+  font-size:15px;
+}
+
+main{
+  max-width:600px;
+  margin:25px auto;
+  padding:15px;
+}
+
+.search-box{
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.search-box h2{
+  margin-top:0;
+}
+
+.search-row{
+  display:flex;
+  gap:8px;
+}
+
+input{
+  flex:1;
+  padding:14px;
+  border-radius:8px;
+  border:1px solid #ddd;
+  font-size:16px;
+}
+
+button{
+  padding:14px 20px;
+  border-radius:8px;
+  border:0;
+  background:#ff7a00;
+  color:white;
+  font-weight:bold;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#e96d00;
+}
+
+#result{
+  margin-top:20px;
+}
+
+.card{
+  background:white;
+  padding:18px;
+  border-radius:14px;
+  margin-bottom:15px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.train-title{
+  font-size:21px;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.train-number{
+  color:#666;
+  margin-bottom:12px;
+}
+
+.live{
+  display:inline-block;
+  background:#e8f8ed;
+  color:#16823b;
+  padding:6px 12px;
+  border-radius:20px;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.status-box{
+  background:#f1f6ff;
+  padding:15px;
+  border-radius:10px;
+  margin-top:15px;
+}
+
+.station{
+  font-size:20px;
+  font-weight:bold;
+  margin:5px 0;
+}
+
+.label{
+  color:#666;
+  font-size:13px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:15px;
+}
+
+.info{
+  background:#f7f7f7;
+  padding:12px;
+  border-radius:9px;
+  text-align:left;
+}
+
+.info strong{
+  display:block;
+  margin-top:4px;
+}
+
+.coach{
+  background:#f7f7f7;
+  padding:12px;
+  border-radius:9px;
+  word-break:break-word;
+  text-align:left;
+  margin-top:15px;
+}
+
+.route-title{
+  font-size:19px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.route-item{
+  padding:11px;
+  border-left:4px solid #ddd;
+  margin-bottom:5px;
+  text-align:left;
+  background:#fafafa;
+  border-radius:5px;
+}
+
+.route-item.current{
+  border-left-color:#16823b;
+  background:#eaf8ee;
+  font-weight:bold;
+}
+
+.route-item.departed{
+  border-left-color:#999;
+}
+
+.route-item.upcoming{
+  border-left-color:#ff7a00;
+}
+
+.small{
+  font-size:13px;
+  color:#666;
+}
+
+.error{
+  background:#fff0f0;
+  color:#c62828;
+  padding:15px;
+  border-radius:10px;
+}
+
+.loading{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+}
+
+@media(max-width:500px){
+
+  main{
+    margin:15px auto;
+    padding:10px;
+  }
+
+  .search-row{
+    flex-direction:column;
+  }
+
+  button{
+    width:100%;
+  }
+
+  .info-grid{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <header>
-<h1>🚆 RailInfoHub</h1>
-<p>Live Train Status | लाइव ट्रेन स्टेटस</p>
+  <h1>🚆 RailInfoHub</h1>
+  <p>Live Train Status | लाइव ट्रेन स्टेटस</p>
 </header>
 
 <main>
-<h2>Check Train Status</h2>
 
-<input id="train" type="number" placeholder="Train Number / ट्रेन नंबर">
+<div class="search-box">
 
-<button onclick="checkTrain()">Search</button>
+  <h2>🔎 Check Train Status</h2>
 
-<div id="result">Train number डालकर Search करें</div>
+  <div class="search-row">
+
+    <input
+      id="train"
+      type="number"
+      placeholder="Train Number / ट्रेन नंबर"
+    >
+
+    <button onclick="checkTrain()">Search</button>
+
+  </div>
+
+</div>
+
+<div id="result">
+  <div class="card">
+    🚆 Train number डालकर Search करें
+  </div>
+</div>
+
 </main>
 
 <script>
+
 async function checkTrain(){
 
-let train=document.getElementById("train").value;
-let result=document.getElementById("result");
+  const train = document.getElementById("train").value.trim();
+  const result = document.getElementById("result");
 
-if(!train){
-result.innerHTML="कृपया Train Number डालें";
-return;
+  if(!train){
+
+    result.innerHTML = `
+      <div class="error">
+        ❌ कृपया Train Number डालें
+      </div>
+    `;
+
+    return;
+  }
+
+  result.innerHTML = `
+    <div class="loading">
+      ⏳ Live status खोज रहे हैं...
+    </div>
+  `;
+
+  try{
+
+    const response = await fetch(
+      "https://railinfohub-api.whitehouse0750.workers.dev/live?train=" +
+      encodeURIComponent(train)
+    );
+
+    const data = await response.json();
+
+    if(!data.success){
+
+      result.innerHTML = `
+        <div class="error">
+          ❌ ${data.message || "Train status नहीं मिला"}
+        </div>
+      `;
+
+      return;
+    }
+
+    const d = data.data;
+
+    showTrainStatus(d);
+
+  }catch(error){
+
+    console.error(error);
+
+    result.innerHTML = `
+      <div class="error">
+        ❌ Live status नहीं मिल पाया।<br>
+        कृपया कुछ देर बाद फिर कोशिश करें।
+      </div>
+    `;
+  }
 }
 
-result.innerHTML="⏳ Live status खोज रहे हैं...";
 
-try{
+function showTrainStatus(d){
 
-let response=await fetch(
-"https://railinfohub-api.whitehouse0750.workers.dev/live?train="+train
-);
+  const train = d.train || {};
+  const current = d.currentLocation || {};
+  const previous = d.previousHalt || {};
+  const next = d.nextHalt || {};
 
-let data=await response.json();
+  let currentStatus = "Running";
 
-result.innerHTML="<pre style='white-space:pre-wrap;text-align:left'>"+
-JSON.stringify(data,null,2)+
-"</pre>";
+  if(current.status === "at-station"){
+    currentStatus = "At Station";
+  }
 
-}catch(error){
+  if(current.status === "departed"){
+    currentStatus = "Departed";
+  }
 
-result.innerHTML="❌ Live status नहीं मिल पाया। कृपया फिर कोशिश करें।";
+  let delayText = "";
+
+  if(d.delayMinutes === undefined || d.delayMinutes === null){
+
+    delayText = "Not Available";
+
+  }else if(d.delayMinutes <= 0){
+
+    delayText = "On Time";
+
+  }else{
+
+    delayText = d.delayMinutes + " min late";
+  }
+
+
+  const currentStation =
+    current.stationName ||
+    getStationName(d.route,current.stationCode) ||
+    current.stationCode ||
+    "Unknown";
+
+
+  result.innerHTML = `
+
+    <div class="card">
+
+      <div class="train-title">
+        🚆 ${train.name || "Train"}
+      </div>
+
+      <div class="train-number">
+        Train No. ${d.trainNumber || train.number || ""}
+      </div>
+
+      <span class="live">
+        🟢 ${d.isLive ? "LIVE • REAL-TIME" : "STATUS AVAILABLE"}
+      </span>
+
+      <div class="status-box">
+
+        <div class="label">
+          CURRENT LOCATION
+        </div>
+
+        <div class="station">
+          📍 ${currentStation}
+        </div>
+
+        <div>
+          ${currentStatus}
+        </div>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info">
+          <span class="label">⬅️ Previous Station</span>
+          <strong>
+            ${previous.stationName || previous.stationCode || "—"}
+          </strong>
+        </div>
+
+        <div class="info">
+          <span class="label">➡️ Next Station</span>
+          <strong>
+            ${next.stationName || next.stationCode || "—"}
+          </strong>
+        </div>
+
+        <div class="info">
+          <span class="label">⏱️ Delay</span>
+          <strong>${delayText}</strong>
+        </div>
+
+        <div class="info">
+          <span class="label">📏 Distance</span>
+          <strong>
+            ${current.distance !== undefined
+              ? current.distance + " km"
+              : "—"}
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="route-title">
+        🚉 Train Information
+      </div>
+
+      <div class="info-grid">
+
+        <div class="info">
+          <span class="label">Source</span>
+          <strong>
+            ${train.source?.name || "—"}
+          </strong>
+        </div>
+
+        <div class="info">
+          <span class="label">Destination</span>
+          <strong>
+            ${train.destination?.name || "—"}
+          </strong>
+        </div>
+
+        <div class="info">
+          <span class="label">Type</span>
+          <strong>
+            ${train.type || train.category || "—"}
+          </strong>
+        </div>
+
+        <div class="info">
+          <span class="label">Total Distance</span>
+          <strong>
+            ${train.distance || "—"} km
+          </strong>
+        </div>
+
+      </div>
+
+      <div class="coach">
+
+        <div class="label">
+          🚃 Coach Position
+        </div>
+
+        <strong>
+          ${train.coachPosition || "Not Available"}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="route-title">
+        🛤️ Train Route
+      </div>
+
+      <div id="routeList"></div>
+
+    </div>
+
+  `;
+
+  showRoute(d.route || [], current.sequence);
 
 }
 
+
+function showRoute(route,currentSequence){
+
+  const routeList = document.getElementById("routeList");
+
+  if(!route.length){
+
+    routeList.innerHTML =
+      "<div class='small'>Route information available नहीं है.</div>";
+
+    return;
+  }
+
+  let html = "";
+
+  route.forEach(station => {
+
+    let className = "";
+
+    if(station.sequence === currentSequence){
+      className = "current";
+    }
+    else if(station.status === "departed"){
+      className = "departed";
+    }
+    else if(station.status === "upcoming"){
+      className = "upcoming";
+    }
+
+    let icon = "🚉";
+
+    if(station.sequence === currentSequence){
+      icon = "📍";
+    }
+    else if(station.status === "departed"){
+      icon = "✅";
+    }
+    else if(station.status === "upcoming"){
+      icon = "➡️";
+    }
+
+    let time = "";
+
+    if(station.actualArrival){
+
+      time =
+        "Arrival: " +
+        formatTime(station.actualArrival);
+
+    }else if(station.scheduledArrival){
+
+      time =
+        "Scheduled: " +
+        formatTime(station.scheduledArrival);
+    }
+
+    html += `
+
+      <div class="route-item ${className}">
+
+        ${icon}
+        <strong>
+          ${station.stationName}
+        </strong>
+
+        <div class="small">
+          ${station.stationCode || ""}
+          ${time ? " • " + time : ""}
+        </div>
+
+      </div>
+
+    `;
+  });
+
+  routeList.innerHTML = html;
 }
+
+
+function getStationName(route,code){
+
+  if(!route || !code){
+    return "";
+  }
+
+  const station = route.find(
+    s => s.stationCode === code
+  );
+
+  return station ? station.stationName : "";
+}
+
+
+function formatTime(dateString){
+
+  try{
+
+    const date = new Date(dateString);
+
+    return date.toLocaleTimeString(
+      "en-IN",
+      {
+        hour:"2-digit",
+        minute:"2-digit",
+        hour12:true
+      }
+    );
+
+  }catch(e){
+
+    return dateString;
+  }
+}
+
 </script>
 
 </body>
