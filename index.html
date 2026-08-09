@@ -1,261 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RailInfoHub - Train Information</title>
-
+<title>RailInfoHub - Live Train Status</title>
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Arial,sans-serif;
-  background:#f4f7fb;
-  color:#172033;
-}
-
-header{
-  background:#0b3d91;
-  color:white;
-  padding:18px 20px;
-  text-align:center;
-}
-
-.logo{
-  font-size:27px;
-  font-weight:bold;
-}
-
-.tagline{
-  margin-top:5px;
-  font-size:13px;
-  opacity:.9;
-}
-
-.hero{
-  background:linear-gradient(135deg,#0b3d91,#1769d1);
-  color:white;
-  text-align:center;
-  padding:45px 20px;
-}
-
-.hero h1{
-  font-size:30px;
-  margin-bottom:10px;
-}
-
-.hero p{
-  font-size:15px;
-  opacity:.95;
-  margin-bottom:25px;
-}
-
-.search-box{
-  max-width:500px;
-  margin:auto;
-  background:white;
-  padding:10px;
-  border-radius:12px;
-  display:flex;
-  gap:8px;
-}
-
-.search-box input{
-  flex:1;
-  border:0;
-  outline:0;
-  padding:14px;
-  font-size:16px;
-  min-width:0;
-}
-
-.search-box button{
-  background:#ff7a00;
-  color:white;
-  border:0;
-  border-radius:8px;
-  padding:0 18px;
-  font-size:15px;
-  font-weight:bold;
-}
-
-.container{
-  max-width:900px;
-  margin:25px auto;
-  padding:0 15px;
-}
-
-.card{
-  background:white;
-  border-radius:14px;
-  padding:22px;
-  margin-bottom:18px;
-  box-shadow:0 4px 15px rgba(0,0,0,.08);
-}
-
-.card h2{
-  color:#0b3d91;
-  margin-bottom:12px;
-}
-
-.features{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-.feature{
-  padding:18px;
-  background:#f1f6ff;
-  border-radius:10px;
-  text-align:center;
-}
-
-.feature .icon{
-  font-size:28px;
-  margin-bottom:8px;
-}
-
-#result{
-  display:none;
-}
-
-.status{
-  color:#148a38;
-  font-weight:bold;
-}
-
-footer{
-  margin-top:35px;
-  background:#111827;
-  color:white;
-  text-align:center;
-  padding:25px 15px;
-  font-size:13px;
-}
-
-@media(max-width:600px){
-  .hero h1{
-    font-size:25px;
-  }
-
-  .search-box{
-    flex-direction:column;
-  }
-
-  .search-box button{
-    padding:13px;
-  }
-
-  .features{
-    grid-template-columns:1fr;
-  }
-}
+body{font-family:Arial;margin:0;background:#f4f7fb;text-align:center}
+header{background:#0b3d91;color:white;padding:20px}
+main{max-width:500px;margin:30px auto;padding:20px}
+input,button{padding:14px;margin:5px;border-radius:8px;border:1px solid #ddd}
+button{background:#ff7a00;color:white;border:0;font-weight:bold}
+#result{margin-top:20px;background:white;padding:20px;border-radius:12px}
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">🚆 RailInfoHub</div>
-  <div class="tagline">Indian Railway Information | भारतीय रेलवे जानकारी</div>
+<h1>🚆 RailInfoHub</h1>
+<p>Live Train Status | लाइव ट्रेन स्टेटस</p>
 </header>
 
-<section class="hero">
-  <h1>Train Information</h1>
-  <p>Find train information quickly and easily</p>
+<main>
+<h2>Check Train Status</h2>
 
-  <div class="search-box">
-    <input id="trainNumber"
-           type="text"
-           inputmode="numeric"
-           placeholder="Enter Train Number / ट्रेन नंबर">
-    <button onclick="searchTrain()">Search</button>
-  </div>
-</section>
+<input id="train" type="number" placeholder="Train Number / ट्रेन नंबर">
 
-<div class="container">
+<button onclick="checkTrain()">Search</button>
 
-  <div id="result" class="card">
-    <h2>🚆 Train Status</h2>
-    <p><b>Train Number:</b> <span id="number"></span></p>
-    <p><b>Status:</b> <span class="status">Ready for Live API</span></p>
-    <p style="margin-top:10px;">
-      Live railway data will appear here after API integration.
-    </p>
-  </div>
-
-  <div class="card">
-    <h2>Railway Services</h2>
-
-    <div class="features">
-
-      <div class="feature">
-        <div class="icon">🚆</div>
-        <b>Live Train Status</b>
-        <p>ट्रेन की लाइव स्थिति</p>
-      </div>
-
-      <div class="feature">
-        <div class="icon">🎫</div>
-        <b>PNR Status</b>
-        <p>PNR स्थिति</p>
-      </div>
-
-      <div class="feature">
-        <div class="icon">🛤️</div>
-        <b>Train Schedule</b>
-        <p>ट्रेन टाइम टेबल</p>
-      </div>
-
-      <div class="feature">
-        <div class="icon">🚉</div>
-        <b>Train Between Stations</b>
-        <p>स्टेशन के बीच ट्रेन</p>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>About RailInfoHub</h2>
-    <p>
-      RailInfoHub provides useful Indian Railway information
-      in Hindi and English.
-    </p>
-    <br>
-    <p>
-      RailInfoHub भारतीय रेलवे से जुड़ी जानकारी हिंदी और
-      English दोनों भाषाओं में उपलब्ध कराने के लिए बनाया गया है।
-    </p>
-  </div>
-
-</div>
-
-<footer>
-  © 2026 RailInfoHub | Indian Railway Information
-</footer>
+<div id="result">Train number डालकर Search करें</div>
+</main>
 
 <script>
-function searchTrain(){
+async function checkTrain(){
 
-  const train = document.getElementById("trainNumber").value.trim();
+let train=document.getElementById("train").value;
+let result=document.getElementById("result");
 
-  if(train === ""){
-    alert("Please enter a train number / ट्रेन नंबर डालें");
-    return;
-  }
+if(!train){
+result.innerHTML="कृपया Train Number डालें";
+return;
+}
 
-  document.getElementById("number").textContent = train;
-  document.getElementById("result").style.display = "block";
+result.innerHTML="⏳ Live status खोज रहे हैं...";
 
-  document.getElementById("result").scrollIntoView({
-    behavior:"smooth"
-  });
+try{
+
+let response=await fetch(
+"https://railinfohub-api.whitehouse0750.workers.dev/live?train="+train
+);
+
+let data=await response.json();
+
+result.innerHTML="<pre style='white-space:pre-wrap;text-align:left'>"+
+JSON.stringify(data,null,2)+
+"</pre>";
+
+}catch(error){
+
+result.innerHTML="❌ Live status नहीं मिल पाया। कृपया फिर कोशिश करें।";
+
+}
+
 }
 </script>
 
