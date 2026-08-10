@@ -552,6 +552,56 @@ document
   );
 
 </script>
+<script>
+(function () {
 
+  const refreshButton = document.createElement("button");
+
+  refreshButton.innerHTML = "🔄 Update Live Status";
+
+  refreshButton.style.width = "100%";
+  refreshButton.style.maxWidth = "600px";
+  refreshButton.style.display = "block";
+  refreshButton.style.margin = "20px auto";
+  refreshButton.style.padding = "16px";
+  refreshButton.style.background = "#087f3f";
+  refreshButton.style.color = "white";
+  refreshButton.style.border = "0";
+  refreshButton.style.borderRadius = "15px";
+  refreshButton.style.fontSize = "20px";
+  refreshButton.style.fontWeight = "bold";
+  refreshButton.style.cursor = "pointer";
+
+  refreshButton.onclick = async function () {
+
+    const trainNumber =
+      document.getElementById("trainNumber").value.trim();
+
+    if (!trainNumber) {
+      alert("पहले Train Number डालें।");
+      return;
+    }
+
+    refreshButton.innerHTML = "⏳ Updating...";
+
+    try {
+      await searchTrain();
+    } finally {
+      refreshButton.innerHTML = "🔄 Update Live Status";
+    }
+
+  };
+
+  const result = document.getElementById("result");
+
+  if (result) {
+    result.parentNode.insertBefore(
+      refreshButton,
+      result
+    );
+  }
+
+})();
+</script>
 </body>
   </html>
