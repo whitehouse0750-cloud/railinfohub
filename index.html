@@ -695,7 +695,7 @@ document
 
       if (result && result.children.length > 1) {
 
-        result.insertBefore(
+     फाई result.insertBefore(
           box,
           result.children[1]
         );
@@ -744,135 +744,211 @@ document
   }
 
 
-  </script>
   <script>
 (function () {
 
-  function addNextStation() {
+  async function addNextStation() {
 
-    // पहले से मौजूद हो तो दोबारा न बनाएं
-    if (document.getElementById("nextStationCard")) return;
+    // पुराना Next Station हटाएँ
+    const old = document.getElementById("nextStationCard");
+    if (old) old.remove();
 
-    // Route / Station Status ढूंढें
-    const all = document.querySelectorAll("div");
+    // Train number input से लें
+    const input = document.querySelector('input');
+    if (!input) return;
 
-    let routeHeading = null;
+    const trainNumber = input.value.trim();
+    if (!trainNumber) return;
 
-    for (const el of all) {
-      const text = (el.innerText || "").trim();
+    try {
+      const apiUrl =
+        "https://railinfohub-api.whitehouse0750.workers.dev/live?train=" +
+        encodeURIComponent(trainNumber);
 
-      if (text === "Route / Station Status") {
-        routeHeading = el;
-        break;
+      const response = await fetch(apiUrl);
+      const result = await response.json();
+
+      if (!result.success || !result.data) return;
+
+      const data = result.data;
+      const route = Array.isArray(data.route) ? data.route : [];
+
+      // Current station खोजें
+      let currentIndex = -1;
+
+      for (let i = 0; i < route.length; i++) {
+        if (
+          route[i].status === "at-station" ||
+          route[i].status === "departed" ||
+          route[i].isHalt === true
+        ) {
+          currentIndex = i;
+        }
       }
-    }
 
-    if (!routeHeading) return;
+      // अगला स्टेशन
+      let next = null;
 
-    // Upcoming station ढूंढें
-    let upcomingText = null;
-
-    for (const el of all) {
-
-      const text = (el.innerText || "").trim();
-
-      if (
-        text.includes("upcoming") &&
-        text.length < 150
-      ) {
-        upcomingText = text;
-        break;
+      if (currentIndex >= 0 && route[currentIndex + 1]) {
+        next = route[currentIndex + 1];
+      } else {
+        next = route.find(x =>
+          x.status === "upcoming" ||
+          x.status === "approaching"
+        );
       }
+
+      if (!next) return;
+
+      const stationName =
+        next.stationName ||
+        next.name ||
+        "Not available";
+
+      const arrival =
+        next.actualArrival ||
+        next.scheduledArrival ||
+        "Not available";
+
+      const platform =
+        next.platform ||
+        "Not available";
+
+      const status =
+        next.status === "approaching"
+          ? "📍 Train is approaching"
+          : "📍 Upcoming station";
+
+      // Route heading खोजें
+      const all = document.querySelectorAll("div");
+      let routeHeading = null;
+
+      for (const el of all) {
+        if ((el.innerText || "").trim() === "Route / Station Status") {
+          routeHeading = el;
+          break;
+        }
+      }
+
+      if (!routeHeading) return;
+
+      // Card बनाएँ
+      const card = document.createElement("div");
+      card.id = "nextStationCard";
+
+      card.style.cssText = `
+        background:#eef3ff;
+        border-radius:20px;
+        padding:22px;
+        margin:20px 0;
+        box-shadow:0 4px 15px rgba(0,0,0,.06);
+      `;
+
+      card.innerHTML = `
+        <div style="
+          font-size:22px;
+          font-weight:700;
+          color:#064f8c;
+          margin-bottom:14px;
+        ">
+          ➡️ Next Station
+        </div>
+
+        <div style="
+          background:#fff;
+          border-radius:15px;
+          padding:18px;
+        ">
+
+          <div style="
+            font-size:17px;
+            color:#666;
+            margin-bottom:8px;
+          ">
+            🚉 अगला स्टेशन
+          </div>
+
+          <div style="
+            font-size:25px;
+            font-weight:800;
+            color:#17233c;
+            margin-bottom:15px;
+          ">
+            ${stationName}
+          </div>
+
+          <div style="
+            font-size:17px;
+            color:#555;
+            margin-bottom:8px;
+          ">
+            ⏰ Expected Arrival
+          </div>
+
+          <div style="
+            font-size:20px;
+            font-weight:700;
+            color:#17233c;
+            margin-bottom:15px;
+          ">
+            ${arrival}
+          </div>
+
+          <div style="
+            font-size:17px;
+            color:#555;
+            margin-bottom:8px;
+          ">
+            🚉 Platform
+          </div>
+
+          <div style="
+            font-size:20px;
+            font-weight:700;
+            color:#17233c;
+            margin-bottom:15px;
+          ">
+            ${platform}
+          </div>
+
+          <div style="
+            font-size:16px;
+            color:#555;
+          ">
+            ${status}
+          </div>
+
+        </div>
+      `;
+
+      // Route Status के ऊपर card लगाएँ
+      routeHeading.parentNode.insertBefore(card, routeHeading);
+
+    } catch (error) {
+      console.error("Next Station Error:", error);
     }
-
-    if (!upcomingText) return;
-
-    // "upcoming" हटाकर स्टेशन का नाम निकालें
-    const stationName = upcomingText
-      .replace("🚆", "")
-      .replace("📌", "")
-      .replace("upcoming", "")
-      .trim();
-
-    if (!stationName) return;
-
-    // नया कार्ड
-    const card = document.createElement("div");
-
-    card.id = "nextStationCard";
-
-    card.style.cssText = `
-      background:#f1f5ff;
-      border-radius:20px;
-      padding:22px;
-      margin:20px 0;
-      box-shadow:0 4px 15px rgba(0,0,0,0.06);
-    `;
-
-    card.innerHTML = `
-      <div style="
-        font-size:22px;
-        font-weight:700;
-        color:#064fa8;
-        margin-bottom:14px;
-      ">
-        ➡️ Next Station
-      </div>
-
-      <div style="
-        background:#ffffff;
-        border-radius:15px;
-        padding:18px;
-      ">
-        <div style="
-          font-size:17px;
-          color:#666;
-          margin-bottom:8px;
-        ">
-          🚉 अगला स्टेशन
-        </div>
-
-        <div style="
-          font-size:25px;
-          font-weight:800;
-          color:#17233c;
-        ">
-          ${stationName}
-        </div>
-
-        <div style="
-          margin-top:12px;
-          font-size:16px;
-          color:#555;
-        ">
-          📍 Train is approaching
-        </div>
-      </div>
-    `;
-
-    // Route heading के ठीक ऊपर लगाएं
-    routeHeading.parentNode.insertBefore(
-      card,
-      routeHeading
-    );
   }
 
-  // Page में data आने के बाद लगातार check करेगा
-  const observer = new MutationObserver(function () {
-    addNextStation();
-  });
+  // Search के बाद automatic update
+  const oldSearch = window.searchTrain;
 
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
+  if (typeof oldSearch === "function") {
+    window.searchTrain = async function () {
+      await oldSearch.apply(this, arguments);
 
-  // शुरुआत में भी check
-  setTimeout(addNextStation, 1000);
-  setTimeout(addNextStation, 3000);
-  setTimeout(addNextStation, 5000);
+      setTimeout(() => {
+        addNextStation();
+      }, 1200);
+    };
+  }
+
+  // Page खुलने पर भी check
+  setTimeout(addNextStation, 1500);
 
 })();
+</script>
+
+
   </script>
 </body>
   </html>
