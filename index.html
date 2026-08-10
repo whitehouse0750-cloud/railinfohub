@@ -331,6 +331,7 @@ async function searchTrain(){
     }
 
     const data = json.data || {};
+    window.lastTrainData = data;
 
     document.getElementById("number")
       .textContent =
@@ -603,5 +604,161 @@ document
 
 })();
 </script>
+  <script>
+(function () {
+
+  function showNextStation() {
+
+    const data = window.lastTrainData;
+
+    if (!data) return;
+
+    const stations =
+      data.stations ||
+      data.route ||
+      data.stationList ||
+      [];
+
+    if (!Array.isArray(stations) || stations.length === 0) {
+      return;
+    }
+
+    let currentIndex = -1;
+
+    // Current station खोजें
+    for (let i = 0; i < stations.length; i++) {
+
+      const s = stations[i];
+
+      if (!s) continue;
+
+      if (
+        s.status === "departed" ||
+        s.status === "arrived" ||
+        s.isHalt === true
+      ) {
+        currentIndex = i;
+      }
+    }
+
+    // अगला स्टेशन
+    let nextStation = null;
+
+    if (
+      currentIndex >= 0 &&
+      currentIndex + 1 < stations.length
+    ) {
+      nextStation = stations[currentIndex + 1];
+    }
+
+    // अगर current index नहीं मिला
+    if (!nextStation) {
+      nextStation = stations.find(function (s) {
+
+        return s &&
+          s.status !== "departed" &&
+          s.status !== "arrived";
+
+      });
+    }
+
+    if (!nextStation) return;
+
+    const name =
+      nextStation.stationName ||
+      nextStation.name ||
+      nextStation.stationCode ||
+      "Next Station";
+
+    const arrival =
+      nextStation.actualArrival ||
+      nextStation.scheduledArrival ||
+      nextStation.arrival ||
+      "Not available";
+
+    let box = document.getElementById(
+      "nextStationBox"
+    );
+
+    if (!box) {
+
+      box = document.createElement("div");
+
+      box.id = "nextStationBox";
+
+      box.className = "card";
+
+      box.style.marginTop = "20px";
+
+      const result =
+        document.getElementById("result");
+
+      if (result && result.children.length > 1) {
+
+        result.insertBefore(
+          box,
+          result.children[1]
+        );
+
+      } else if (result) {
+
+        result.appendChild(box);
+
+      } else {
+
+        return;
+
+      }
+    }
+
+    box.innerHTML =
+
+      '<div class="route-title">' +
+      '➡️ Next Station' +
+      '</div>' +
+
+      '<div class="info">' +
+
+      '<div class="label">' +
+      '🚉 अगला स्टेशन' +
+      '</div>' +
+
+      '<div class="value">' +
+      name +
+      '</div>' +
+
+      '</div>' +
+
+      '<div class="info">' +
+
+      '<div class="label">' +
+      '⏰ Expected Arrival' +
+      '</div>' +
+
+      '<div class="value">' +
+      arrival +
+      '</div>' +
+
+      '</div>';
+
+  }
+
+  // Original Search को सुरक्षित रखें
+  const originalSearchTrain =
+    window.searchTrain;
+
+  window.searchTrain = async function () {
+
+    await originalSearchTrain();
+
+    setTimeout(
+      showNextStation,
+      300
+    );
+
+  };
+
+})();
+  </script>
 </body>
   </html>
