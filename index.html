@@ -743,22 +743,7 @@ document
 
   }
 
-  // Original Search को सुरक्षित रखें
-  const originalSearchTrain =
-    window.searchTrain;
 
-  window.searchTrain = async function () {
-
-    await originalSearchTrain();
-
-    setTimeout(
-      showNextStation,
-      300
-    );
-
-  };
-
-})();
   </script>
   <script>
 (function () {
