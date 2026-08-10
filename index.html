@@ -13,221 +13,250 @@
 
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:#f1f5fb;
-  color:#172033;
+  font-family:Arial, sans-serif;
+  background:#eef3f9;
+  color:#17233c;
 }
 
-.header{
-  background:#064fa8;
+header{
+  background:#08499b;
   color:white;
   text-align:center;
-  padding:25px 15px;
+  padding:22px 15px;
 }
 
-.header h1{
-  margin:0 0 8px;
-  font-size:30px;
-}
-
-.header p{
+header h1{
   margin:0;
-  font-size:16px;
+  font-size:34px;
+}
+
+header p{
+  margin:8px 0 0;
+  font-size:17px;
 }
 
 .hero{
-  background:linear-gradient(135deg,#0867d5,#0752a8);
+  background:linear-gradient(135deg,#0866d5,#0750aa);
   color:white;
   text-align:center;
-  padding:40px 15px;
+  padding:45px 20px 55px;
 }
 
 .hero h2{
-  font-size:32px;
+  font-size:38px;
   margin:0 0 10px;
 }
 
 .hero p{
-  font-size:18px;
-  margin:0 0 25px;
+  font-size:20px;
+  margin-bottom:30px;
 }
 
 .search-box{
-  background:white;
   max-width:600px;
   margin:auto;
-  padding:15px;
-  border-radius:18px;
+  background:white;
+  padding:20px;
+  border-radius:25px;
 }
 
-.search-box input{
+input{
   width:100%;
-  padding:17px;
-  border:1px solid #ddd;
-  border-radius:12px;
-  font-size:20px;
+  padding:20px;
+  font-size:22px;
+  border:1px solid #ccc;
+  border-radius:15px;
   outline:none;
-  margin-bottom:12px;
 }
 
-.search-box button{
+button{
   width:100%;
-  padding:17px;
-  border:0;
-  border-radius:12px;
-  background:#ff7900;
+  margin-top:15px;
+  padding:20px;
+  background:#ff7a00;
   color:white;
-  font-size:20px;
+  border:0;
+  border-radius:15px;
+  font-size:22px;
   font-weight:bold;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.98);
 }
 
 .container{
-  max-width:850px;
-  margin:30px auto;
+  max-width:700px;
+  margin:35px auto;
   padding:0 15px;
 }
 
 .card{
   background:white;
-  border-radius:20px;
-  padding:25px;
-  margin-bottom:20px;
-  box-shadow:0 5px 20px rgba(0,0,0,.08);
+  border-radius:25px;
+  padding:28px;
+  box-shadow:0 5px 25px rgba(0,0,0,.08);
 }
 
-.train-title{
-  color:#0752a8;
-  font-size:28px;
+.train-name{
+  color:#0750aa;
+  font-size:32px;
   font-weight:bold;
+  margin-bottom:8px;
 }
 
 .train-number{
+  font-size:20px;
   color:#555;
-  font-size:18px;
-  margin-top:8px;
   margin-bottom:20px;
 }
 
 .success{
-  background:#e4f8e9;
-  color:#167333;
-  padding:16px;
-  border-radius:12px;
+  background:#e5f8e9;
+  color:#16783a;
+  padding:18px;
+  border-radius:15px;
+  font-size:20px;
   font-weight:bold;
-  font-size:18px;
   margin-bottom:20px;
 }
 
 .info{
-  background:#f4f7fc;
-  padding:18px;
-  border-radius:12px;
-  margin-bottom:15px;
+  background:#f2f6fc;
+  padding:20px;
+  border-radius:15px;
+  margin-top:15px;
 }
 
-.info-title{
-  color:#666;
-  font-size:16px;
-  margin-bottom:7px;
+.label{
+  font-size:18px;
+  color:#555;
 }
 
-.info-value{
-  font-size:21px;
+.value{
+  font-size:24px;
   font-weight:bold;
-}
-
-.section-title{
-  color:#0752a8;
-  font-size:25px;
-  font-weight:bold;
-  margin-bottom:18px;
-}
-
-.station{
-  background:#f5f8fd;
-  border-left:5px solid #0867d5;
-  padding:15px;
-  border-radius:8px;
-  margin-bottom:12px;
-}
-
-.station.current{
-  background:#fff4e8;
-  border-left-color:#ff7900;
-}
-
-.station-name{
-  font-size:19px;
-  font-weight:bold;
-}
-
-.station-code{
-  color:#666;
-  margin-top:4px;
-}
-
-.station-time{
-  margin-top:8px;
-  font-size:15px;
-}
-
-.loading{
-  text-align:center;
-  font-size:19px;
-  color:#0752a8;
+  margin-top:5px;
 }
 
 .error{
   background:#ffe8e8;
-  color:#b00020;
+  color:#c40000;
   padding:18px;
-  border-radius:12px;
-  text-align:center;
+  border-radius:15px;
   font-weight:bold;
+  margin-top:20px;
+}
+
+.loading{
+  text-align:center;
+  padding:20px;
+  font-size:18px;
+}
+
+.route-title{
+  color:#0750aa;
+  font-size:28px;
+  margin-top:30px;
+}
+
+.station{
+  background:#f2f6fc;
+  padding:16px;
+  border-radius:12px;
+  margin-top:10px;
 }
 
 footer{
   text-align:center;
-  color:#666;
   padding:30px;
+  color:#666;
 }
 
+.hidden{
+  display:none;
+}
 </style>
 </head>
 
 <body>
 
-<div class="header">
+<header>
   <h1>🚆 RailInfoHub</h1>
   <p>Indian Railway Information | भारतीय रेलवे जानकारी</p>
-</div>
+</header>
 
-<div class="hero">
+<section class="hero">
 
   <h2>Train Information</h2>
-
   <p>Find train information quickly and easily</p>
 
   <div class="search-box">
 
     <input
+      type="number"
       id="trainNumber"
-      type="text"
-      inputmode="numeric"
       placeholder="Enter Train Number / ट्रेन नंबर"
     >
 
-    <button type="button" onclick="searchTrain()">
-      🔎 Search
+    <button onclick="searchTrain()">
+      Search
     </button>
 
   </div>
 
-</div>
+</section>
 
 <div class="container">
 
-  <div id="result"></div>
+  <div id="loading" class="loading hidden">
+    🔄 Train information loading...
+  </div>
+
+  <div id="errorBox" class="error hidden"></div>
+
+  <div id="result" class="hidden">
+
+    <div class="card">
+
+      <div class="train-name" id="trainName">
+        🚆 Train
+      </div>
+
+      <div class="train-number">
+        Train Number: <span id="number"></span>
+      </div>
+
+      <div class="success">
+        ✅ Live train data received
+      </div>
+
+      <div class="info">
+        <div class="label">📍 Current Station</div>
+        <div class="value" id="currentStation">-</div>
+      </div>
+
+      <div class="info">
+        <div class="label">⏱️ Delay</div>
+        <div class="value" id="delay">-</div>
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <div class="route-title">
+        Route / Station Status
+      </div>
+
+      <div id="routeList">
+        Train data successfully received from API.
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
 
@@ -238,824 +267,281 @@ footer{
 
 <script>
 
-function searchTrain(){
-
-  var train =
-    document.getElementById("trainNumber").value.trim();
-
-  var result =
-    document.getElementById("result");
-
-
-  if(train === ""){
-
-    result.innerHTML =
-      '<div class="card"><div class="error">कृपया ट्रेन नंबर डालें।</div></div>';
-
-    return;
-  }
-
-
-  result.innerHTML =
-    '<div class="card"><div class="loading">⏳ ट्रेन की जानकारी खोजी जा रही है...</div></div>';
-
-
-  var url =
-    "https://railinfohub-api.whitehouse0750.workers.dev/live?train="
-    + encodeURIComponent(train);
-
-
-  fetch(url)
-
-    .then(function(response){
-
-      if(!response.ok){
-        throw new Error("API Error");
-      }
-
-      return response.json();
-
-    })
-
-    .then(function(json){
-
-      console.log("RailInfoHub API:",json);
-
-      if(!json.success || !json.data){
-
-        throw new Error("Data not found");
-
-      }
-
-      showTrain(json.data);
-
-    })
-
-    .catch(function(error){
-
-      console.log(error);
-
-      result.innerHTML =
-      '<div class="card">' +
-      '<div class="error">' +
-      '❌ Live status नहीं मिल पाया।<br><br>' +
-      'कृपया ट्रेन नंबर दोबारा डालकर कोशिश करें।' +
-      '</div>' +
-      '</div>';
-
-    });
-
-}
-
-
-function showTrain(data){
-
-  var result =
-    document.getElementById("result");
-
-
-  var number =
-    data.trainNumber || "-";
-
-
-  var name =
-    data.trainName || "Indian Railway Train";
-
-
-  /*
-    API के अलग-अलग possible route names
-  */
-
-  var route =
-    data.route ||
-    data.stations ||
-    data.stationList ||
-    data.schedule ||
-    [];
-
-
-  if(!Array.isArray(route)){
-    route = [];
-  }
-
-
-  /*
-    Current station खोजें
-  */
-
-  var current = null;
-
-
-  for(var i=0;i<route.length;i++){
-
-    var s = route[i];
-
-
-    if(
-      s.isHalt === true &&
-      (
-        s.status === "departed" ||
-        s.status === "arrived" ||
-        s.status === "halt"
-      )
-    ){
-
-      current = s;
-
-    }
-
-  }
-
-
-  /*
-    अगर ऊपर से current नहीं मिला
-    तो last departed station
-  */
-
-  if(!current){
-
-    for(var j=0;j<route.length;j++){
-
-      var x = route[j];
-
-      if(x.status === "departed"){
-
-        current = x;
-
-      }
-
-    }
-
-  }
-
-
-  /*
-    अगर फिर भी नहीं मिला
-  */
-
-  if(!current && route.length > 0){
-
-    current = route[0];
-
-  }
-
-
-  var currentName =
-    current
-    ? (
-        current.stationName ||
-        current.name ||
-        "-"
-      )
-    : "-";
-
-
-  var currentCode =
-    current
-    ? (
-        current.stationCode ||
-        current.code ||
-        ""
-      )
-    : "";
-
-
-  /*
-    Route बनाना
-  */
-
-  var routeHTML = "";
-
-
-  for(var k=0;k<route.length;k++){
-
-    var station = route[k];
-
-
-    var stationName =
-      station.stationName ||
-      station.name ||
-      "-";
-
-
-    var stationCode =
-      station.stationCode ||
-      station.code ||
-      "";
-
-
-    var arrival =
-      station.actualArrival ||
-      station.scheduledArrival ||
-      "-";
-
-
-    var departure =
-      station.actualDeparture ||
-      station.scheduledDeparture ||
-      "-";
-
-
-    var isCurrent =
-      current &&
-      (
-        stationName === currentName ||
-        stationCode === currentCode
-      );
-
-
-    routeHTML +=
-
-      '<div class="station ' +
-      (isCurrent ? 'current' : '') +
-      '">' +
-
-      '<div class="station-name">' +
-
-      (isCurrent ? '📍 ' : '🚉 ') +
-
-      stationName +
-
-      '</div>' +
-
-      '<div class="station-code">' +
-
-      stationCode +
-
-      '</div>' +
-
-      '<div class="station-time">' +
-
-      '🕐 Arrival: <b>' +
-      formatTime(arrival) +
-      '</b>' +
-
-      '</div>' +
-
-      '<div class="station-time">' +
-
-      '🚆 Departure: <b>' +
-      formatTime(departure) +
-      '</b>' +
-
-      '</div>' +
-
-      '</div>';
-
-  }
-
-
-  /*
-    अगर route मिला है तो दिखाएँ
-  */
-
-  if(routeHTML === ""){
-
-    routeHTML =
-      '<div class="info">' +
-      'Train data successfully received from API.' +
-      '</div>';
-
-  }
-
-
-  result.innerHTML =
-
-    '<div class="card">' +
-
-      '<div class="train-title">' +
-      '🚆 ' + name +
-      '</div>' +
-
-      '<div class="train-number">' +
-      'Train Number: ' + number +
-      '</div>' +
-
-      '<div class="success">' +
-      '✅ Live train data received' +
-      '</div>' +
-
-      '<div class="info">' +
-
-        '<div class="info-title">' +
-        '📍 Current Station' +
-        '</div>' +
-
-        '<div class="info-value">' +
-        currentName +
-        '</div>' +
-
-        '<div>' +
-        currentCode +
-        '</div>' +
-
-      '</div>' +
-
-    '</div>' +
-
-
-    '<div class="card">' +
-
-      '<div class="section-title">' +
-      '🚉 Route / Station Status' +
-      '</div>' +
-
-      routeHTML +
-
-    '</div>';
-
-}
-
-
-function formatTime(value){
-
-  if(!value || value === "-"){
-    return "-";
-  }
-
-
-  /*
-    API की date/time string को
-    सीधे readable बनाने की कोशिश
-  */
-
-  try{
-
-    var d = new Date(value);
-
-    if(!isNaN(d.getTime())){
-
-      return d.toLocaleTimeString(
-        "en-IN",
-        {
-          hour:"2-digit",
-          minute:"2-digit"
-        }
-      );
-
-    }
-
-  }catch(e){
-
-  }
-
-
-  return value;
-
-}
-
-
-/*
-  Enter दबाने पर भी Search
-*/
-
-document
-  .getElementById("trainNumber")
-  .addEventListener(
-    "keydown",
-    function(event){
-
-      if(event.key === "Enter"){
-
-        searchTrain();
-
-      }
-
-    }
-  );
-
-<script>
-
 const API_URL =
 "https://railinfohub-api.whitehouse0750.workers.dev/live?train=";
 
 
 async function searchTrain(){
 
-  const input = document.getElementById("trainNumber");
-  const train = input.value.trim();
-  const result = document.getElementById("result");
+  const trainNumber =
+    document.getElementById("trainNumber").value.trim();
 
-  if(!train){
-    result.innerHTML =
-      '<div class="error">कृपया ट्रेन नंबर डालें।</div>';
+  const result =
+    document.getElementById("result");
+
+  const errorBox =
+    document.getElementById("errorBox");
+
+  const loading =
+    document.getElementById("loading");
+
+  if(!trainNumber){
+
+    errorBox.textContent =
+      "❌ कृपया Train Number डालें।";
+
+    errorBox.classList.remove("hidden");
+    result.classList.add("hidden");
+
     return;
   }
 
-  result.innerHTML =
-    '<div class="card loading">⏳ Live train data लोड हो रहा है...</div>';
+  errorBox.classList.add("hidden");
+  result.classList.add("hidden");
+  loading.classList.remove("hidden");
 
   try{
 
     const response =
-      await fetch(API_URL + encodeURIComponent(train));
+      await fetch(
+        API_URL + encodeURIComponent(trainNumber),
+        {
+          method:"GET",
+          cache:"no-store"
+        }
+      );
 
     if(!response.ok){
-      throw new Error("API Error " + response.status);
+      throw new Error(
+        "API Error: " + response.status
+      );
     }
 
-    const json = await response.json();
+    const json =
+      await response.json();
 
-    console.log("API DATA:", json);
+    console.log("API RESPONSE:",json);
 
-    if(!json.success || !json.data){
-      throw new Error("Train data नहीं मिला");
+    if(!json || json.success !== true){
+
+      throw new Error(
+        "Train data नहीं मिला"
+      );
+
     }
 
-    displayTrain(json.data);
+    const data = json.data || {};
 
-  }catch(error){
+    document.getElementById("number")
+      .textContent =
+      data.trainNumber || trainNumber;
+
+    document.getElementById("trainName")
+      .textContent =
+      "🚆 " +
+      (
+        data.trainName ||
+        "Train Information"
+      );
+
+    /*
+      Current station निकालने की कोशिश
+    */
+
+    let currentStation = "-";
+
+    if(data.currentStation){
+      currentStation =
+        typeof data.currentStation === "string"
+        ? data.currentStation
+        : (
+            data.currentStation.stationName ||
+            data.currentStation.name ||
+            "-"
+          );
+    }
+
+    /*
+      अगर currentStation नहीं मिला,
+      तो station list से आखिरी arrived/departed
+      station ढूंढेंगे।
+    */
+
+    const stations =
+      data.stations ||
+      data.route ||
+      data.stationList ||
+      [];
+
+    if(
+      currentStation === "-" &&
+      Array.isArray(stations) &&
+      stations.length > 0
+    ){
+
+      for(let i = stations.length - 1; i >= 0; i--){
+
+        const s = stations[i];
+
+        if(
+          s &&
+          (
+            s.status === "departed" ||
+            s.status === "arrived" ||
+            s.isHalt === true
+          )
+        ){
+
+          currentStation =
+            s.stationName ||
+            s.name ||
+            s.stationCode ||
+            "-";
+
+          break;
+        }
+      }
+    }
+
+    document.getElementById("currentStation")
+      .textContent =
+      currentStation;
+
+
+    /*
+      Delay
+    */
+
+    let delay = "-";
+
+    if(data.delay !== undefined){
+      delay = data.delay;
+    }
+
+    if(
+      data.delayMinutes !== undefined
+    ){
+      delay =
+        data.delayMinutes + " min";
+    }
+
+    if(
+      delay === "-" &&
+      Array.isArray(stations)
+    ){
+
+      const latest =
+        stations[stations.length - 1];
+
+      if(latest){
+
+        if(latest.delay !== undefined){
+          delay = latest.delay;
+        }
+
+        if(
+          latest.delayMinutes !== undefined
+        ){
+          delay =
+            latest.delayMinutes + " min";
+        }
+      }
+    }
+
+    if(delay === 0 || delay === "0"){
+      delay = "On Time";
+    }
+
+    if(delay === "-"){
+      delay = "On Time";
+    }
+
+    document.getElementById("delay")
+      .textContent = delay;
+
+
+    /*
+      Route / Station list
+    */
+
+    const routeList =
+      document.getElementById("routeList");
+
+    routeList.innerHTML = "";
+
+    if(
+      Array.isArray(stations) &&
+      stations.length > 0
+    ){
+
+      stations.forEach(function(station){
+
+        const div =
+          document.createElement("div");
+
+        div.className = "station";
+
+        const name =
+          station.stationName ||
+          station.name ||
+          station.stationCode ||
+          "Unknown Station";
+
+        const status =
+          station.status ||
+          "";
+
+        div.innerHTML =
+          "🚉 <b>" +
+          name +
+          "</b>" +
+          (
+            status
+            ? "<br>📌 " + status
+            : ""
+          );
+
+        routeList.appendChild(div);
+
+      });
+
+    }else{
+
+      routeList.innerHTML =
+        '<div class="info">' +
+        'Train data successfully received from API.' +
+        '</div>';
+
+    }
+
+    loading.classList.add("hidden");
+    result.classList.remove("hidden");
+
+  }
+  catch(error){
 
     console.error(error);
 
-    result.innerHTML = `
-      <div class="card">
-        <div class="error">
-          ❌ Live status नहीं मिल पाया।<br><br>
-          कृपया थोड़ी देर बाद फिर कोशिश करें।
-        </div>
-      </div>
-    `;
-  }
-}
+    loading.classList.add("hidden");
 
+    errorBox.textContent =
+      "❌ Live train status नहीं मिल पाया। कृपया फिर कोशिश करें।";
 
-function displayTrain(data){
-
-  const result = document.getElementById("result");
-
-  const trainNumber =
-    data.trainNumber || "-";
-
-  const trainName =
-    data.trainName || "Indian Railway Train";
-
-
-  /* API में route मौजूद है */
-
-  let route =
-    data.route ||
-    data.stations ||
-    data.stationList ||
-    [];
-
-
-  if(!Array.isArray(route)){
-    route = [];
-  }
-
-
-  /*
-   Current station निकालना
-  */
-
-  let current = null;
-
-
-  /* पहले halt वाली स्टेशन खोजें */
-
-  current =
-    route.find(s =>
-      s.isHalt === true &&
-      (
-        s.status === "arrived" ||
-        s.status === "at_station" ||
-        s.status === "halt"
-      )
-    );
-
-
-  /*
-   अगर नहीं मिली तो सबसे आखिरी departed
-   स्टेशन लें
-  */
-
-  if(!current){
-
-    const departed =
-      route.filter(s =>
-        s.status === "departed" &&
-        (
-          s.actualDeparture ||
-          s.actualArrival
-        )
-      );
-
-    if(departed.length){
-      current = departed[departed.length - 1];
-    }
-  }
-
-
-  /*
-   अगर फिर भी नहीं मिली तो
-   आखिरी actual station
-  */
-
-  if(!current){
-
-    const actual =
-      route.filter(s =>
-        s.actualArrival ||
-        s.actualDeparture
-      );
-
-    if(actual.length){
-      current = actual[actual.length - 1];
-    }
-  }
-
-
-  const currentStation =
-    current
-      ? (
-          current.stationName ||
-          current.name ||
-          "-"
-        )
-      : "-";
-
-
-  const currentCode =
-    current
-      ? (
-          current.stationCode ||
-          current.code ||
-          ""
-        )
-      : "";
-
-
-  /*
-   Delay निकालना
-  */
-
-  let delay = 0;
-
-
-  if(current){
-
-    delay =
-      Number(current.delayDeparture) ||
-      Number(current.delayArrival) ||
-      0;
-  }
-
-
-  /* अगर current से delay नहीं मिला */
-
-  if(!delay){
-
-    route.forEach(s => {
-
-      const d =
-        Number(s.delayDeparture) ||
-        Number(s.delayArrival) ||
-        0;
-
-      if(d > delay){
-        delay = d;
-      }
-
-    });
+    errorBox.classList.remove("hidden");
 
   }
-
-
-  let delayText = "On Time";
-
-  if(delay > 0){
-    delayText = delay + " min late";
-  }
-
-
-  /*
-   Route HTML
-  */
-
-  let stationsHTML = "";
-
-
-  route.forEach((station, index) => {
-
-    const name =
-      station.stationName ||
-      station.name ||
-      "-";
-
-
-    const code =
-      station.stationCode ||
-      station.code ||
-      "";
-
-
-    const arrival =
-      station.actualArrival ||
-      station.scheduledArrival ||
-      "-";
-
-
-    const departure =
-      station.actualDeparture ||
-      station.scheduledDeparture ||
-      "-";
-
-
-    const stationDelay =
-      Number(station.delayDeparture) ||
-      Number(station.delayArrival) ||
-      0;
-
-
-    const isCurrent =
-      current &&
-      (
-        name === currentStation ||
-        code === currentCode
-      );
-
-
-    let statusText =
-      station.status || "";
-
-
-    if(stationDelay > 0){
-      statusText +=
-        " • " + stationDelay + " min late";
-    }
-
-
-    stationsHTML += `
-
-      <div class="station ${isCurrent ? "current" : ""}">
-
-        <div class="station-name">
-
-          ${isCurrent ? "📍" : "🚉"}
-
-          ${name}
-
-          ${code ? `(${code})` : ""}
-
-        </div>
-
-
-        <div class="station-time">
-
-          🕐 Arrival:
-          <strong>
-            ${formatTime(arrival)}
-          </strong>
-
-        </div>
-
-
-        <div class="station-time">
-
-          🚆 Departure:
-          <strong>
-            ${formatTime(departure)}
-          </strong>
-
-        </div>
-
-
-        ${
-          statusText
-          ?
-          `
-          <div class="station-time">
-            ${statusText}
-          </div>
-          `
-          :
-          ""
-        }
-
-      </div>
-
-    `;
-
-  });
-
-
-  result.innerHTML = `
-
-    <div class="card">
-
-      <div class="train-title">
-        🚆 ${trainName}
-      </div>
-
-
-      <div class="train-number">
-        Train Number: ${trainNumber}
-      </div>
-
-
-      <div class="status">
-        ✅ Live train data received
-      </div>
-
-
-      <div class="info-grid">
-
-        <div class="info">
-
-          <small>📍 Current Station</small>
-
-          <strong>
-            ${currentStation}
-          </strong>
-
-          ${
-            currentCode
-            ?
-            `<div>${currentCode}</div>`
-            :
-            ""
-          }
-
-        </div>
-
-
-        <div class="info">
-
-          <small>⏱️ Delay</small>
-
-          <strong class="${delay > 0 ? "delay" : ""}">
-            ${delayText}
-          </strong>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="section-title">
-        🚉 Route / Station Status
-      </div>
-
-      ${
-        stationsHTML
-        ?
-        stationsHTML
-        :
-        `
-        <div class="info">
-          Route data उपलब्ध नहीं है।
-        </div>
-        `
-      }
-
-    </div>
-
-  `;
 
 }
 
 
-function formatTime(value){
-
-  if(!value || value === "-"){
-    return "-";
-  }
-
-
-  try{
-
-    const date = new Date(value);
-
-    if(!isNaN(date.getTime())){
-
-      return date.toLocaleTimeString(
-        "en-IN",
-        {
-          hour:"2-digit",
-          minute:"2-digit"
-        }
-      );
-
-    }
-
-  }catch(e){}
-
-  return value;
-
-}
-
-
-/* Enter दबाने पर Search */
+/*
+  Enter दबाने पर भी Search होगा
+*/
 
 document
   .getElementById("trainNumber")
   .addEventListener(
-    "keypress",
+    "keydown",
     function(event){
 
       if(event.key === "Enter"){
@@ -1066,3 +552,6 @@ document
   );
 
 </script>
+
+</body>
+  </html>
