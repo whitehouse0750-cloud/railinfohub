@@ -760,5 +760,134 @@ document
 
 })();
   </script>
+  <script>
+(function () {
+
+  function addNextStation() {
+
+    // पहले से मौजूद हो तो दोबारा न बनाएं
+    if (document.getElementById("nextStationCard")) return;
+
+    // Route / Station Status ढूंढें
+    const all = document.querySelectorAll("div");
+
+    let routeHeading = null;
+
+    for (const el of all) {
+      const text = (el.innerText || "").trim();
+
+      if (text === "Route / Station Status") {
+        routeHeading = el;
+        break;
+      }
+    }
+
+    if (!routeHeading) return;
+
+    // Upcoming station ढूंढें
+    let upcomingText = null;
+
+    for (const el of all) {
+
+      const text = (el.innerText || "").trim();
+
+      if (
+        text.includes("upcoming") &&
+        text.length < 150
+      ) {
+        upcomingText = text;
+        break;
+      }
+    }
+
+    if (!upcomingText) return;
+
+    // "upcoming" हटाकर स्टेशन का नाम निकालें
+    const stationName = upcomingText
+      .replace("🚆", "")
+      .replace("📌", "")
+      .replace("upcoming", "")
+      .trim();
+
+    if (!stationName) return;
+
+    // नया कार्ड
+    const card = document.createElement("div");
+
+    card.id = "nextStationCard";
+
+    card.style.cssText = `
+      background:#f1f5ff;
+      border-radius:20px;
+      padding:22px;
+      margin:20px 0;
+      box-shadow:0 4px 15px rgba(0,0,0,0.06);
+    `;
+
+    card.innerHTML = `
+      <div style="
+        font-size:22px;
+        font-weight:700;
+        color:#064fa8;
+        margin-bottom:14px;
+      ">
+        ➡️ Next Station
+      </div>
+
+      <div style="
+        background:#ffffff;
+        border-radius:15px;
+        padding:18px;
+      ">
+        <div style="
+          font-size:17px;
+          color:#666;
+          margin-bottom:8px;
+        ">
+          🚉 अगला स्टेशन
+        </div>
+
+        <div style="
+          font-size:25px;
+          font-weight:800;
+          color:#17233c;
+        ">
+          ${stationName}
+        </div>
+
+        <div style="
+          margin-top:12px;
+          font-size:16px;
+          color:#555;
+        ">
+          📍 Train is approaching
+        </div>
+      </div>
+    `;
+
+    // Route heading के ठीक ऊपर लगाएं
+    routeHeading.parentNode.insertBefore(
+      card,
+      routeHeading
+    );
+  }
+
+  // Page में data आने के बाद लगातार check करेगा
+  const observer = new MutationObserver(function () {
+    addNextStation();
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  // शुरुआत में भी check
+  setTimeout(addNextStation, 1000);
+  setTimeout(addNextStation, 3000);
+  setTimeout(addNextStation, 5000);
+
+})();
+  </script>
 </body>
   </html>
