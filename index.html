@@ -950,5 +950,94 @@ document
 
 
   </script>
+  <script>
+(function () {
+
+  function addTrainStatus() {
+
+    if (document.getElementById("trainStatusCard")) return;
+
+    const delayElement =
+      document.getElementById("delay");
+
+    if (!delayElement) return;
+
+    const delayText =
+      delayElement.textContent.trim();
+
+    if (!delayText || delayText === "-") return;
+
+    let status = "STATUS UNKNOWN";
+    let icon = "⚪";
+
+    const delayNumber =
+      parseInt(delayText.replace(/[^\d-]/g, ""), 10);
+
+    if (!isNaN(delayNumber)) {
+
+      if (delayNumber === 0) {
+        status = "ON TIME";
+        icon = "🟢";
+      } else if (delayNumber > 0) {
+        status = "DELAYED";
+        icon = "🟠";
+      }
+
+    }
+
+    const card =
+      document.createElement("div");
+
+    card.id = "trainStatusCard";
+
+    card.style.cssText = `
+      background:#ffffff;
+      border-radius:20px;
+      padding:20px;
+      margin:20px 0;
+      box-shadow:0 4px 15px rgba(0,0,0,.07);
+      text-align:center;
+    `;
+
+    card.innerHTML = `
+      <div style="
+        font-size:18px;
+        color:#666;
+        margin-bottom:8px;
+      ">
+        🚆 Train Status
+      </div>
+
+      <div style="
+        font-size:28px;
+        font-weight:800;
+        color:#064fa8;
+      ">
+        ${icon} ${status}
+      </div>
+    `;
+
+    const result =
+      document.getElementById("result");
+
+    if (result) {
+      result.appendChild(card);
+    }
+  }
+
+  const observer =
+    new MutationObserver(function () {
+      addTrainStatus();
+    });
+
+  observer.observe(document.body, {
+    childList:true,
+    subtree:true
+  });
+
+  setTimeout(addTrainStatus, 2000);
+
+})();
+  </script>
 </body>
   </html>
