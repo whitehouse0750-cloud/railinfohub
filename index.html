@@ -622,7 +622,445 @@ document
     }
   );
 
-</script>
+<script>
 
-</body>
-  </html>
+const API_URL =
+"https://railinfohub-api.whitehouse0750.workers.dev/live?train=";
+
+
+async function searchTrain(){
+
+  const input = document.getElementById("trainNumber");
+  const train = input.value.trim();
+  const result = document.getElementById("result");
+
+  if(!train){
+    result.innerHTML =
+      '<div class="error">कृपया ट्रेन नंबर डालें।</div>';
+    return;
+  }
+
+  result.innerHTML =
+    '<div class="card loading">⏳ Live train data लोड हो रहा है...</div>';
+
+  try{
+
+    const response =
+      await fetch(API_URL + encodeURIComponent(train));
+
+    if(!response.ok){
+      throw new Error("API Error " + response.status);
+    }
+
+    const json = await response.json();
+
+    console.log("API DATA:", json);
+
+    if(!json.success || !json.data){
+      throw new Error("Train data नहीं मिला");
+    }
+
+    displayTrain(json.data);
+
+  }catch(error){
+
+    console.error(error);
+
+    result.innerHTML = `
+      <div class="card">
+        <div class="error">
+          ❌ Live status नहीं मिल पाया।<br><br>
+          कृपया थोड़ी देर बाद फिर कोशिश करें।
+        </div>
+      </div>
+    `;
+  }
+}
+
+
+function displayTrain(data){
+
+  const result = document.getElementById("result");
+
+  const trainNumber =
+    data.trainNumber || "-";
+
+  const trainName =
+    data.trainName || "Indian Railway Train";
+
+
+  /* API में route मौजूद है */
+
+  let route =
+    data.route ||
+    data.stations ||
+    data.stationList ||
+    [];
+
+
+  if(!Array.isArray(route)){
+    route = [];
+  }
+
+
+  /*
+   Current station निकालना
+  */
+
+  let current = null;
+
+
+  /* पहले halt वाली स्टेशन खोजें */
+
+  current =
+    route.find(s =>
+      s.isHalt === true &&
+      (
+        s.status === "arrived" ||
+        s.status === "at_station" ||
+        s.status === "halt"
+      )
+    );
+
+
+  /*
+   अगर नहीं मिली तो सबसे आखिरी departed
+   स्टेशन लें
+  */
+
+  if(!current){
+
+    const departed =
+      route.filter(s =>
+        s.status === "departed" &&
+        (
+          s.actualDeparture ||
+          s.actualArrival
+        )
+      );
+
+    if(departed.length){
+      current = departed[departed.length - 1];
+    }
+  }
+
+
+  /*
+   अगर फिर भी नहीं मिली तो
+   आखिरी actual station
+  */
+
+  if(!current){
+
+    const actual =
+      route.filter(s =>
+        s.actualArrival ||
+        s.actualDeparture
+      );
+
+    if(actual.length){
+      current = actual[actual.length - 1];
+    }
+  }
+
+
+  const currentStation =
+    current
+      ? (
+          current.stationName ||
+          current.name ||
+          "-"
+        )
+      : "-";
+
+
+  const currentCode =
+    current
+      ? (
+          current.stationCode ||
+          current.code ||
+          ""
+        )
+      : "";
+
+
+  /*
+   Delay निकालना
+  */
+
+  let delay = 0;
+
+
+  if(current){
+
+    delay =
+      Number(current.delayDeparture) ||
+      Number(current.delayArrival) ||
+      0;
+  }
+
+
+  /* अगर current से delay नहीं मिला */
+
+  if(!delay){
+
+    route.forEach(s => {
+
+      const d =
+        Number(s.delayDeparture) ||
+        Number(s.delayArrival) ||
+        0;
+
+      if(d > delay){
+        delay = d;
+      }
+
+    });
+
+  }
+
+
+  let delayText = "On Time";
+
+  if(delay > 0){
+    delayText = delay + " min late";
+  }
+
+
+  /*
+   Route HTML
+  */
+
+  let stationsHTML = "";
+
+
+  route.forEach((station, index) => {
+
+    const name =
+      station.stationName ||
+      station.name ||
+      "-";
+
+
+    const code =
+      station.stationCode ||
+      station.code ||
+      "";
+
+
+    const arrival =
+      station.actualArrival ||
+      station.scheduledArrival ||
+      "-";
+
+
+    const departure =
+      station.actualDeparture ||
+      station.scheduledDeparture ||
+      "-";
+
+
+    const stationDelay =
+      Number(station.delayDeparture) ||
+      Number(station.delayArrival) ||
+      0;
+
+
+    const isCurrent =
+      current &&
+      (
+        name === currentStation ||
+        code === currentCode
+      );
+
+
+    let statusText =
+      station.status || "";
+
+
+    if(stationDelay > 0){
+      statusText +=
+        " • " + stationDelay + " min late";
+    }
+
+
+    stationsHTML += `
+
+      <div class="station ${isCurrent ? "current" : ""}">
+
+        <div class="station-name">
+
+          ${isCurrent ? "📍" : "🚉"}
+
+          ${name}
+
+          ${code ? `(${code})` : ""}
+
+        </div>
+
+
+        <div class="station-time">
+
+          🕐 Arrival:
+          <strong>
+            ${formatTime(arrival)}
+          </strong>
+
+        </div>
+
+
+        <div class="station-time">
+
+          🚆 Departure:
+          <strong>
+            ${formatTime(departure)}
+          </strong>
+
+        </div>
+
+
+        ${
+          statusText
+          ?
+          `
+          <div class="station-time">
+            ${statusText}
+          </div>
+          `
+          :
+          ""
+        }
+
+      </div>
+
+    `;
+
+  });
+
+
+  result.innerHTML = `
+
+    <div class="card">
+
+      <div class="train-title">
+        🚆 ${trainName}
+      </div>
+
+
+      <div class="train-number">
+        Train Number: ${trainNumber}
+      </div>
+
+
+      <div class="status">
+        ✅ Live train data received
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info">
+
+          <small>📍 Current Station</small>
+
+          <strong>
+            ${currentStation}
+          </strong>
+
+          ${
+            currentCode
+            ?
+            `<div>${currentCode}</div>`
+            :
+            ""
+          }
+
+        </div>
+
+
+        <div class="info">
+
+          <small>⏱️ Delay</small>
+
+          <strong class="${delay > 0 ? "delay" : ""}">
+            ${delayText}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="section-title">
+        🚉 Route / Station Status
+      </div>
+
+      ${
+        stationsHTML
+        ?
+        stationsHTML
+        :
+        `
+        <div class="info">
+          Route data उपलब्ध नहीं है।
+        </div>
+        `
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+function formatTime(value){
+
+  if(!value || value === "-"){
+    return "-";
+  }
+
+
+  try{
+
+    const date = new Date(value);
+
+    if(!isNaN(date.getTime())){
+
+      return date.toLocaleTimeString(
+        "en-IN",
+        {
+          hour:"2-digit",
+          minute:"2-digit"
+        }
+      );
+
+    }
+
+  }catch(e){}
+
+  return value;
+
+}
+
+
+/* Enter दबाने पर Search */
+
+document
+  .getElementById("trainNumber")
+  .addEventListener(
+    "keypress",
+    function(event){
+
+      if(event.key === "Enter"){
+        searchTrain();
+      }
+
+    }
+  );
+
+</script>
