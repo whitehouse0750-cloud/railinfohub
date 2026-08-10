@@ -9,307 +9,298 @@
 <style>
 *{
   box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
   font-family:Arial,sans-serif;
-  margin:0;
-  background:#f4f7fb;
-  color:#222;
+  background:#f1f5f9;
+  color:#172033;
 }
 
-header{
-  background:#0b3d91;
+.header{
+  background:#0645a5;
   color:white;
-  padding:22px 15px;
   text-align:center;
+  padding:25px 15px;
 }
 
-header h1{
-  margin:0 0 7px;
-  font-size:28px;
+.logo{
+  font-size:32px;
+  font-weight:bold;
 }
 
-header p{
-  margin:0;
-  font-size:15px;
+.subtitle{
+  font-size:16px;
+  margin-top:8px;
 }
 
-main{
-  max-width:600px;
-  margin:25px auto;
-  padding:15px;
+.hero{
+  background:linear-gradient(135deg,#0756c7,#176bcf);
+  color:white;
+  text-align:center;
+  padding:45px 20px;
+}
+
+.hero h1{
+  font-size:36px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  font-size:18px;
+  margin-bottom:30px;
 }
 
 .search-box{
+  max-width:600px;
+  margin:auto;
   background:white;
-  padding:20px;
-  border-radius:14px;
-  box-shadow:0 3px 12px rgba(0,0,0,.08);
-}
-
-.search-box h2{
-  margin-top:0;
-}
-
-.search-row{
-  display:flex;
-  gap:8px;
+  padding:18px;
+  border-radius:20px;
 }
 
 input{
-  flex:1;
-  padding:14px;
-  border-radius:8px;
+  width:100%;
+  padding:18px;
+  font-size:18px;
   border:1px solid #ddd;
-  font-size:16px;
+  border-radius:10px;
+  outline:none;
 }
 
 button{
-  padding:14px 20px;
-  border-radius:8px;
-  border:0;
+  width:100%;
+  margin-top:12px;
+  padding:17px;
   background:#ff7a00;
   color:white;
+  border:0;
+  border-radius:10px;
+  font-size:19px;
   font-weight:bold;
-  font-size:16px;
-  cursor:pointer;
 }
 
-button:hover{
-  background:#e96d00;
+button:active{
+  transform:scale(.98);
 }
 
 #result{
-  margin-top:20px;
+  max-width:700px;
+  margin:30px auto;
+  padding:0 15px;
 }
 
 .card{
   background:white;
-  padding:18px;
-  border-radius:14px;
+  border-radius:18px;
+  padding:22px;
   margin-bottom:15px;
-  box-shadow:0 3px 12px rgba(0,0,0,.08);
+  box-shadow:0 4px 15px rgba(0,0,0,.08);
 }
 
-.train-title{
-  font-size:21px;
+.train-name{
+  font-size:25px;
   font-weight:bold;
-  margin-bottom:5px;
+  color:#0645a5;
 }
 
 .train-number{
   color:#666;
-  margin-bottom:12px;
+  margin-top:5px;
 }
 
-.live{
-  display:inline-block;
-  background:#e8f8ed;
-  color:#16823b;
-  padding:6px 12px;
-  border-radius:20px;
-  font-weight:bold;
-  font-size:13px;
-}
-
-.status-box{
-  background:#f1f6ff;
-  padding:15px;
-  border-radius:10px;
+.status{
   margin-top:15px;
+  padding:15px;
+  background:#e8f5e9;
+  border-radius:10px;
+  font-weight:bold;
 }
 
 .station{
-  font-size:20px;
+  border-left:4px solid #176bcf;
+  padding:12px 15px;
+  margin:10px 0;
+  background:#f8fafc;
+  border-radius:8px;
+}
+
+.station-name{
+  font-size:18px;
   font-weight:bold;
-  margin:5px 0;
-}
-
-.label{
-  color:#666;
-  font-size:13px;
-}
-
-.info-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:15px;
-}
-
-.info{
-  background:#f7f7f7;
-  padding:12px;
-  border-radius:9px;
-  text-align:left;
-}
-
-.info strong{
-  display:block;
-  margin-top:4px;
-}
-
-.coach{
-  background:#f7f7f7;
-  padding:12px;
-  border-radius:9px;
-  word-break:break-word;
-  text-align:left;
-  margin-top:15px;
-}
-
-.route-title{
-  font-size:19px;
-  font-weight:bold;
-  margin-bottom:12px;
-}
-
-.route-item{
-  padding:11px;
-  border-left:4px solid #ddd;
-  margin-bottom:5px;
-  text-align:left;
-  background:#fafafa;
-  border-radius:5px;
-}
-
-.route-item.current{
-  border-left-color:#16823b;
-  background:#eaf8ee;
-  font-weight:bold;
-}
-
-.route-item.departed{
-  border-left-color:#999;
-}
-
-.route-item.upcoming{
-  border-left-color:#ff7a00;
 }
 
 .small{
-  font-size:13px;
   color:#666;
-}
-
-.error{
-  background:#fff0f0;
-  color:#c62828;
-  padding:15px;
-  border-radius:10px;
+  font-size:14px;
+  margin-top:5px;
 }
 
 .loading{
-  background:white;
-  padding:20px;
-  border-radius:12px;
+  text-align:center;
+  font-size:18px;
+  padding:25px;
 }
 
-@media(max-width:500px){
+.error{
+  background:#fee2e2;
+  color:#b91c1c;
+  padding:18px;
+  border-radius:12px;
+  font-weight:bold;
+}
 
-  main{
-    margin:15px auto;
-    padding:10px;
-  }
-
-  .search-row{
-    flex-direction:column;
-  }
-
-  button{
-    width:100%;
-  }
-
-  .info-grid{
-    grid-template-columns:1fr;
-  }
+.footer{
+  text-align:center;
+  padding:30px;
+  color:#666;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>🚆 RailInfoHub</h1>
-  <p>Live Train Status | लाइव ट्रेन स्टेटस</p>
-</header>
+<div class="header">
+  <div class="logo">🚆 RailInfoHub</div>
+  <div class="subtitle">
+    Indian Railway Information | भारतीय रेलवे जानकारी
+  </div>
+</div>
 
-<main>
+<div class="hero">
+  <h1>Train Information</h1>
+  <p>Find train information quickly and easily</p>
 
-<div class="search-box">
-
-  <h2>🔎 Check Train Status</h2>
-
-  <div class="search-row">
-
+  <div class="search-box">
     <input
-      id="train"
       type="number"
-      placeholder="Train Number / ट्रेन नंबर"
+      id="trainNumber"
+      placeholder="Enter Train Number / ट्रेन नंबर"
     >
 
-    <button onclick="checkTrain()">Search</button>
-
-  </div>
-
-</div>
-
-<div id="result">
-  <div class="card">
-    🚆 Train number डालकर Search करें
+    <button onclick="searchTrain()">
+      Search
+    </button>
   </div>
 </div>
 
-</main>
+<div id="result"></div>
+
+<div class="footer">
+  © 2026 RailInfoHub
+</div>
 
 <script>
 
-async function checkTrain(){
+const API_URL =
+"https://railinfohub-api.whitehouse0750.workers.dev/live?train=";
 
-  const train = document.getElementById("train").value.trim();
-  const result = document.getElementById("result");
 
-  if(!train){
+async function searchTrain(){
 
-    result.innerHTML = `
-      <div class="error">
-        ❌ कृपया Train Number डालें
-      </div>
-    `;
+  const trainNumber =
+    document.getElementById("trainNumber").value.trim();
+
+  const result =
+    document.getElementById("result");
+
+  if(!trainNumber){
+
+    result.innerHTML =
+      '<div class="error">कृपया ट्रेन नंबर डालें।</div>';
 
     return;
   }
 
-  result.innerHTML = `
-    <div class="loading">
-      ⏳ Live status खोज रहे हैं...
-    </div>
-  `;
+  result.innerHTML =
+    '<div class="loading">⏳ ट्रेन की जानकारी खोजी जा रही है...</div>';
 
   try{
 
-    const response = await fetch(
-      "https://railinfohub-api.whitehouse0750.workers.dev/live?train=" +
-      encodeURIComponent(train)
-    );
+    const response =
+      await fetch(API_URL + encodeURIComponent(trainNumber));
 
-    const data = await response.json();
+    if(!response.ok){
+      throw new Error("API Error");
+    }
+
+    const data =
+      await response.json();
 
     if(!data.success){
+      throw new Error("Train data not found");
+    }
 
-      result.innerHTML = `
-        <div class="error">
-          ❌ ${data.message || "Train status नहीं मिला"}
+    let html = "";
+
+    html += `
+      <div class="card">
+
+        <div class="train-name">
+          🚆 ${data.trainName || "Train"}
+        </div>
+
+        <div class="train-number">
+          Train Number: ${data.trainNumber || trainNumber}
+        </div>
+
+        <div class="status">
+          ✅ Live train data received
+        </div>
+
+        <br>
+
+        <b>Route / Station Status</b>
+    `;
+
+    if(Array.isArray(data.stations)){
+
+      data.stations.forEach(station => {
+
+        html += `
+          <div class="station">
+
+            <div class="station-name">
+              ${station.stationName || "Station"}
+            </div>
+
+            <div class="small">
+              Station Code:
+              ${station.stationCode || "-"}
+            </div>
+
+            <div class="small">
+              Status:
+              ${station.status || "-"}
+            </div>
+
+            <div class="small">
+              Platform:
+              ${station.platform || "-"}
+            </div>
+
+          </div>
+        `;
+
+      });
+
+    }else{
+
+      html += `
+        <div class="station">
+          Train data successfully received from API.
         </div>
       `;
 
-      return;
     }
 
-    const d = data.data;
+    html += `
+      </div>
+    `;
 
-    showTrainStatus(d);
+    result.innerHTML = html;
 
   }catch(error){
 
@@ -317,306 +308,16 @@ async function checkTrain(){
 
     result.innerHTML = `
       <div class="error">
-        ❌ Live status नहीं मिल पाया।<br>
-        कृपया कुछ देर बाद फिर कोशिश करें।
+        ❌ Live status नहीं मिल पाया।<br><br>
+        कृपया ट्रेन नंबर दोबारा जाँचें और फिर कोशिश करें।
       </div>
     `;
-  }
-}
 
-
-function showTrainStatus(d){
-
-  const train = d.train || {};
-  const current = d.currentLocation || {};
-  const previous = d.previousHalt || {};
-  const next = d.nextHalt || {};
-
-  let currentStatus = "Running";
-
-  if(current.status === "at-station"){
-    currentStatus = "At Station";
   }
 
-  if(current.status === "departed"){
-    currentStatus = "Departed";
-  }
-
-  let delayText = "";
-
-  if(d.delayMinutes === undefined || d.delayMinutes === null){
-
-    delayText = "Not Available";
-
-  }else if(d.delayMinutes <= 0){
-
-    delayText = "On Time";
-
-  }else{
-
-    delayText = d.delayMinutes + " min late";
-  }
-
-
-  const currentStation =
-    current.stationName ||
-    getStationName(d.route,current.stationCode) ||
-    current.stationCode ||
-    "Unknown";
-
-
-  result.innerHTML = `
-
-    <div class="card">
-
-      <div class="train-title">
-        🚆 ${train.name || "Train"}
-      </div>
-
-      <div class="train-number">
-        Train No. ${d.trainNumber || train.number || ""}
-      </div>
-
-      <span class="live">
-        🟢 ${d.isLive ? "LIVE • REAL-TIME" : "STATUS AVAILABLE"}
-      </span>
-
-      <div class="status-box">
-
-        <div class="label">
-          CURRENT LOCATION
-        </div>
-
-        <div class="station">
-          📍 ${currentStation}
-        </div>
-
-        <div>
-          ${currentStatus}
-        </div>
-
-      </div>
-
-
-      <div class="info-grid">
-
-        <div class="info">
-          <span class="label">⬅️ Previous Station</span>
-          <strong>
-            ${previous.stationName || previous.stationCode || "—"}
-          </strong>
-        </div>
-
-        <div class="info">
-          <span class="label">➡️ Next Station</span>
-          <strong>
-            ${next.stationName || next.stationCode || "—"}
-          </strong>
-        </div>
-
-        <div class="info">
-          <span class="label">⏱️ Delay</span>
-          <strong>${delayText}</strong>
-        </div>
-
-        <div class="info">
-          <span class="label">📏 Distance</span>
-          <strong>
-            ${current.distance !== undefined
-              ? current.distance + " km"
-              : "—"}
-          </strong>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="route-title">
-        🚉 Train Information
-      </div>
-
-      <div class="info-grid">
-
-        <div class="info">
-          <span class="label">Source</span>
-          <strong>
-            ${train.source?.name || "—"}
-          </strong>
-        </div>
-
-        <div class="info">
-          <span class="label">Destination</span>
-          <strong>
-            ${train.destination?.name || "—"}
-          </strong>
-        </div>
-
-        <div class="info">
-          <span class="label">Type</span>
-          <strong>
-            ${train.type || train.category || "—"}
-          </strong>
-        </div>
-
-        <div class="info">
-          <span class="label">Total Distance</span>
-          <strong>
-            ${train.distance || "—"} km
-          </strong>
-        </div>
-
-      </div>
-
-      <div class="coach">
-
-        <div class="label">
-          🚃 Coach Position
-        </div>
-
-        <strong>
-          ${train.coachPosition || "Not Available"}
-        </strong>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="route-title">
-        🛤️ Train Route
-      </div>
-
-      <div id="routeList"></div>
-
-    </div>
-
-  `;
-
-  showRoute(d.route || [], current.sequence);
-
-}
-
-
-function showRoute(route,currentSequence){
-
-  const routeList = document.getElementById("routeList");
-
-  if(!route.length){
-
-    routeList.innerHTML =
-      "<div class='small'>Route information available नहीं है.</div>";
-
-    return;
-  }
-
-  let html = "";
-
-  route.forEach(station => {
-
-    let className = "";
-
-    if(station.sequence === currentSequence){
-      className = "current";
-    }
-    else if(station.status === "departed"){
-      className = "departed";
-    }
-    else if(station.status === "upcoming"){
-      className = "upcoming";
-    }
-
-    let icon = "🚉";
-
-    if(station.sequence === currentSequence){
-      icon = "📍";
-    }
-    else if(station.status === "departed"){
-      icon = "✅";
-    }
-    else if(station.status === "upcoming"){
-      icon = "➡️";
-    }
-
-    let time = "";
-
-    if(station.actualArrival){
-
-      time =
-        "Arrival: " +
-        formatTime(station.actualArrival);
-
-    }else if(station.scheduledArrival){
-
-      time =
-        "Scheduled: " +
-        formatTime(station.scheduledArrival);
-    }
-
-    html += `
-
-      <div class="route-item ${className}">
-
-        ${icon}
-        <strong>
-          ${station.stationName}
-        </strong>
-
-        <div class="small">
-          ${station.stationCode || ""}
-          ${time ? " • " + time : ""}
-        </div>
-
-      </div>
-
-    `;
-  });
-
-  routeList.innerHTML = html;
-}
-
-
-function getStationName(route,code){
-
-  if(!route || !code){
-    return "";
-  }
-
-  const station = route.find(
-    s => s.stationCode === code
-  );
-
-  return station ? station.stationName : "";
-}
-
-
-function formatTime(dateString){
-
-  try{
-
-    const date = new Date(dateString);
-
-    return date.toLocaleTimeString(
-      "en-IN",
-      {
-        hour:"2-digit",
-        minute:"2-digit",
-        hour12:true
-      }
-    );
-
-  }catch(e){
-
-    return dateString;
-  }
 }
 
 </script>
 
 </body>
-</html>
+  </html>
