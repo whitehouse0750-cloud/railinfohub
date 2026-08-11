@@ -524,11 +524,32 @@ async function searchTrain(){
     }
 
 
-    document.getElementById("delay")
-      .textContent =
-      Number(delay) === 0
-      ? "On Time"
-      : delay + " min";
+    const delayBox =
+  document.getElementById("delay");
+
+const delayMinutes =
+  Number(delay) || 0;
+
+if (delayMinutes === 0) {
+
+  delayBox.textContent =
+    "🟢 ON TIME";
+
+} else if (delayMinutes < 120) {
+
+  delayBox.textContent =
+    "🟠 DELAYED — " +
+    delayMinutes +
+    " min";
+
+} else {
+
+  delayBox.textContent =
+    "🔴 HEAVILY DELAYED — " +
+    delayMinutes +
+    " min";
+
+      }
 
 
     /* NEXT STATION */
